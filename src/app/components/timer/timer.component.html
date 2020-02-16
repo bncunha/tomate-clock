@@ -1,8 +1,7 @@
-<div class="circle">
-  <div class="line" id="line1"></div>
-  <div class="line" id="line2"></div>
-  <div class="line" id="line3"></div>
-  <div class="line" id="line4"></div>
-  24
-  25
+<div class="wrapper">
+  <div class="circle bg-timer"></div>
+  <div class="timer-counter" [class.showLeft]="showLeftSide" >
+    <div class="circle --left" [style.transform]="getRotationString('LEFT')"></div>
+    <div class="circle --right" [style.transform]="getRotationString('RIGHT')"></div>
+  </div>
 </div>

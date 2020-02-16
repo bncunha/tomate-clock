@@ -1,52 +1,36 @@
-$bg-color: #eeeeee;
 
-.timer-wrapper {
-    position: relative;
+.timer-counter {
+  position: absolute;
+  clip: rect(0px, 500px, 500px, 133px);
+  
+  &.showLeft {
+    clip: inherit;
+  }
 }
 
 .circle {
-    position: relative;
-    border: 8px solid #af0909;
-    background: transparent;
+  position: relative;
+  border: 10px solid #af0909;
+  background: transparent;
+  border-radius: 50%;
+  width: 250px;
+  height: 250px;
+  margin: auto;
+  position: absolute;
+
+  &.--left {
+    clip: rect(0px, 133px, 500px, 0px);
+    top: -2px;
+    left: -1px;
+  }
+  &.--right {
+    top: -2px;
+    left: -3px;
+    clip: rect(0px, 500px, 500px, 133px);
+  }
+
+  &.bg-timer {
+    border: 8px solid #eeeeee;
     box-shadow: 0px 1px 4px 1px #962a2a;
-    border-radius: 50%;
-    width: 250px;
-    height: 250px;
-    margin: auto;
-}
-
-.line {
-    width: 100%;
-    height: 100%;
-    border: solid 10px;
-    border-color: #000 transparent transparent;
-    border-radius: 58%;
-
-    position: absolute;
-    top: -10px;
-    left: -10px;
-}
-
-#line1,
-#line2,
-#line3,
-#line4 {
-    border: solid 9px;
-    top: -9px;
-    left: -9px;
-    border-color: $bg-color transparent transparent;
-}
-
-#line1 {
-    transform: rotate(45deg);
-    background: radial-gradient(transparent 67%, black);
-}
-#line2 {
-    transform: rotate(135deg);
-}
-#line3 {
-    transform: rotate(225deg);
-}
-#line4 {
-    transform: rotate(315deg);
+  }
 }
