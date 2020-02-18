@@ -1,6 +1,10 @@
 <div class="wrapper">
   <div class="circle bg-timer"></div>
-  <div class="timer-counter" [class.showLeft]="showLeftSide" >
+  <div class="timer">
+    <span tabindex="0" class="timer--text"> {{ time | date: 'mm'}} </span>
+    <span tabindex="0" class="timer--text"> {{ time | date: 'ss'}} </span>
+  </div>
+  <div class="timer-counter" [class.showLeft]="showLeftSide">    
     <div class="circle --left" [style.transform]="getRotationString('LEFT')"></div>
     <div class="circle --right" [style.transform]="getRotationString('RIGHT')"></div>
   </div>

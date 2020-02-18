@@ -1,4 +1,24 @@
 
+.wrapper {
+  position: relative;
+  width: 270px;
+  height: 270px;
+  display: inline-block;
+}
+
+.timer {
+  position: absolute;
+  left: calc(50% - 48px);
+  top: calc(50% - 79px);
+  .timer--text {
+    display: block;
+    font-size: 5em;
+    color: #eeeeee;
+    text-shadow: 3px 2px #0000005c;
+    line-height: 0.9em;
+  }  
+}
+
 .timer-counter {
   position: absolute;
   clip: rect(0px, 500px, 500px, 133px);

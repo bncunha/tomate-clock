@@ -9,7 +9,9 @@ import { ThrowStmt } from '@angular/compiler';
 export class TimerComponent implements OnInit {
   @Input() seconds: number;
 
+  time: Date;
   showLeftSide = false;
+  
   private maxLeftRotation = 360;
   private maxRightRotation = 0;
 
@@ -22,7 +24,7 @@ export class TimerComponent implements OnInit {
 
   ngOnInit() {
     this.calcRotationOffset();
-    this.moveTimer();
+    this.start();
   }
 
   calcRotationOffset() {
@@ -30,30 +32,40 @@ export class TimerComponent implements OnInit {
     this.rotationOffset = circleDeg / this.seconds;
   }
 
-  moveTimer() {
+  start() {
     console.log('Init Timer ----> ', new Date());
+    this.time = new Date(this.seconds * 1000);
     const interval = setInterval(() => {
-      if (this.leftRotation < this.maxLeftRotation) {
-        this.leftRotation += (this.leftRotation + this.rotationOffset) < this.maxLeftRotation ?
-                              this.rotationOffset : (this.leftRotation - this.maxLeftRotation) * -1;
-      }
-      if (this.rightRotation < this.maxRightRotation) {
-        if (this.rightRotation + this.rotationOffset < this.maxRightRotation) {
-          this.rightRotation += this.rotationOffset;
-        } else {
-          const lastRightRotation = this.rightRotation - this.maxRightRotation;
-          this.rightRotation += lastRightRotation * -1;
-          this.leftRotation += this.rotationOffset + lastRightRotation;
-          this.showLeftSide = true;
-        }
+      this.time = new Date(this.time.getTime() - 1000);
+      this.moveClock();
+      this.isTheEnd(interval);
+    }, 1000);
+  }
+
+  private isTheEnd(interval) {
+    if (this.time.getTime() === 0) {
+      console.log('Finish  Timer ----> ', new Date());
+      clearInterval(interval);
+    }
+  }
+
+  moveClock() {
+    if (this.leftRotation < this.maxLeftRotation) {
+      this.leftRotation += (this.leftRotation + this.rotationOffset) < this.maxLeftRotation ?
+                            this.rotationOffset : (this.leftRotation - this.maxLeftRotation) * -1;
+    }
+    if (this.rightRotation < this.maxRightRotation) {
+      if (this.rightRotation + this.rotationOffset < this.maxRightRotation) {
+        this.rightRotation += this.rotationOffset;
       } else {
+        const lastRightRotation = this.rightRotation - this.maxRightRotation;
+        this.rightRotation += lastRightRotation * -1;
+        this.leftRotation += this.rotationOffset + lastRightRotation;
         this.showLeftSide = true;
       }
-      if (this.leftRotation === this.maxLeftRotation) {
-        console.log('Finish  Timer ----> ', new Date());
-        clearInterval(interval);
-      }
-    }, 1000);
+    } else {
+      this.showLeftSide = true;
+    }
   }
 
   getRotationString(side: 'LEFT' | 'RIGHT') {
