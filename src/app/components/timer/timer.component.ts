@@ -15,6 +15,8 @@ export class TimerComponent implements OnInit {
   private leftRotation = 0;
   private rightRotation = -180;
 
+  private rotationOffset = 72;
+
   constructor() { }
 
   ngOnInit() {
@@ -22,20 +24,28 @@ export class TimerComponent implements OnInit {
   }
 
   moveTimer() {
-    setInterval(() => {
+    this.rotationOffset = 360 / 120;
+    console.log(new Date());
+    const interval = setInterval(() => {
       if (this.leftRotation < this.maxLeftRotation) {
-        this.leftRotation++;
+        this.leftRotation += (this.leftRotation + this.rotationOffset) < this.maxLeftRotation ?
+                              this.rotationOffset : (this.leftRotation - this.maxLeftRotation) * -1;
       }
       if (this.rightRotation < this.maxRightRotation) {
-        this.rightRotation++;
+        this.rightRotation += (this.rightRotation + this.rotationOffset) < this.maxRightRotation ?
+                            this.rotationOffset : (this.rightRotation - this.maxRightRotation) * -1;
       } else {
         this.showLeftSide = true;
       }
-    }, 10);
+      if (this.leftRotation === this.maxLeftRotation) {
+        console.log(new Date());
+        clearInterval(interval);
+      }
+    }, 1000);
   }
 
   getRotationString(side: 'LEFT' | 'RIGHT') {
-    return `rotate(${ side === 'LEFT' ? this.leftRotation : this.rightRotation }deg)`;
+    return `rotate(${side === 'LEFT' ? this.leftRotation : this.rightRotation}deg)`;
   }
 
 }
