@@ -38,8 +38,14 @@ export class TimerComponent implements OnInit {
                               this.rotationOffset : (this.leftRotation - this.maxLeftRotation) * -1;
       }
       if (this.rightRotation < this.maxRightRotation) {
-        this.rightRotation += (this.rightRotation + this.rotationOffset) < this.maxRightRotation ?
-                            this.rotationOffset : (this.rightRotation - this.maxRightRotation) * -1;
+        if (this.rightRotation + this.rotationOffset < this.maxRightRotation) {
+          this.rightRotation += this.rotationOffset;
+        } else {
+          const lastRightRotation = this.rightRotation - this.maxRightRotation;
+          this.rightRotation += lastRightRotation * -1;
+          this.leftRotation += this.rotationOffset + lastRightRotation;
+          this.showLeftSide = true;
+        }
       } else {
         this.showLeftSide = true;
       }
