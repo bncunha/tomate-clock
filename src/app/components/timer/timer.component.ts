@@ -7,6 +7,7 @@ import { ThrowStmt } from '@angular/compiler';
   styleUrls: ['./timer.component.scss']
 })
 export class TimerComponent implements OnInit {
+  @Input() seconds: number;
 
   showLeftSide = false;
   private maxLeftRotation = 360;
@@ -20,12 +21,17 @@ export class TimerComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    this.calcRotationOffset();
     this.moveTimer();
   }
 
+  calcRotationOffset() {
+    const circleDeg = 360;
+    this.rotationOffset = circleDeg / this.seconds;
+  }
+
   moveTimer() {
-    this.rotationOffset = 360 / 120;
-    console.log(new Date());
+    console.log('Init Timer ----> ', new Date());
     const interval = setInterval(() => {
       if (this.leftRotation < this.maxLeftRotation) {
         this.leftRotation += (this.leftRotation + this.rotationOffset) < this.maxLeftRotation ?
@@ -38,7 +44,7 @@ export class TimerComponent implements OnInit {
         this.showLeftSide = true;
       }
       if (this.leftRotation === this.maxLeftRotation) {
-        console.log(new Date());
+        console.log('Finish  Timer ----> ', new Date());
         clearInterval(interval);
       }
     }, 1000);
