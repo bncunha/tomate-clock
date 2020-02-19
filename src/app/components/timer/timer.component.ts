@@ -24,7 +24,7 @@ export class TimerComponent implements OnInit {
 
   ngOnInit() {
     this.calcRotationOffset();
-    this.start();
+    this.time = new Date(0);
   }
 
   calcRotationOffset() {
