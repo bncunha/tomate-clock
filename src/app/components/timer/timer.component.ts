@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChildren, ElementRef, QueryList, Input, Renderer2 } from '@angular/core';
+import { Component, OnInit, ViewChildren, ElementRef, QueryList, Input, Renderer2, Output, EventEmitter } from '@angular/core';
 import { ThrowStmt } from '@angular/compiler';
 
 @Component({
@@ -7,6 +7,7 @@ import { ThrowStmt } from '@angular/compiler';
   styleUrls: ['./timer.component.scss']
 })
 export class TimerComponent implements OnInit {
+  @Output() finish = new EventEmitter();
   @Input() seconds: number;
 
   time: Date;
@@ -14,12 +15,11 @@ export class TimerComponent implements OnInit {
   
   private maxLeftRotation = 360;
   private maxRightRotation = 0;
-
   private leftRotation = 0;
   private rightRotation = -180;
-
   private rotationOffset = 72;
-
+  private clockPulse;
+  private isPaused = false;
   constructor() { }
 
   ngOnInit() {
@@ -28,28 +28,44 @@ export class TimerComponent implements OnInit {
   }
 
   calcRotationOffset() {
-    const circleDeg = 360;
-    this.rotationOffset = circleDeg / this.seconds;
   }
 
-  start() {
-    console.log('Init Timer ----> ', new Date());
-    this.time = new Date(this.seconds * 1000);
-    const interval = setInterval(() => {
+  start(timeInSeconds?: number) {
+    if (!this.isPaused) {
+      this.isPaused = false;
+      this.reset(timeInSeconds);
+    }
+
+    this.clockPulse = setInterval(() => {
       this.time = new Date(this.time.getTime() - 1000);
       this.moveClock();
-      this.isTheEnd(interval);
+      this.isTheEnd(this.clockPulse);
     }, 1000);
+  }
+
+  reset(timeInSeconds) {
+    this.time = new Date(timeInSeconds ? timeInSeconds * 1000 : this.seconds * 1000);
+    this.rotationOffset = 360 / (timeInSeconds ? timeInSeconds : this.seconds);
+    this.leftRotation = 0;
+    this.rightRotation = -180;
+    this.showLeftSide = false;
+    this.pause();
+  }
+
+  pause() {
+    this.isPaused = true;
+    clearInterval(this.clockPulse);
   }
 
   private isTheEnd(interval) {
     if (this.time.getTime() === 0) {
       console.log('Finish  Timer ----> ', new Date());
       clearInterval(interval);
+      this.finish.emit();
     }
   }
 
-  moveClock() {
+  private moveClock() {
     if (this.leftRotation < this.maxLeftRotation) {
       this.leftRotation += (this.leftRotation + this.rotationOffset) < this.maxLeftRotation ?
                             this.rotationOffset : (this.leftRotation - this.maxLeftRotation) * -1;
@@ -68,7 +84,7 @@ export class TimerComponent implements OnInit {
     }
   }
 
-  getRotationString(side: 'LEFT' | 'RIGHT') {
+  private getRotationString(side: 'LEFT' | 'RIGHT') {
     return `rotate(${side === 'LEFT' ? this.leftRotation : this.rightRotation}deg)`;
   }
 
