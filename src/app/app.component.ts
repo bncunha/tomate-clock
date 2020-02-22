@@ -21,23 +21,34 @@ export class AppComponent {
 
   numberCycle = 1;
   typeCycle: 'focus' | 'long' | 'short' = 'focus';
+  audio: HTMLAudioElement;
+  audioPlaying = false;
 
   startPomodoro() {
+    this.stopAudio();
     this.timer.start(this.getTimeConfigByType(this.typeCycle));
   }
 
   pausePomodoro() {
+    this.stopAudio();
     this.timer.pause();
   }
 
-  resetPomodoro() {
+  resetPomodoro(stopAudio = true) {
+    if (stopAudio) {
+      this.stopAudio();
+    }
     this.timer.reset(this.getTimeConfigByType(this.typeCycle));
   }
 
   nextCycle() {
+    this.playAudio();
     this.actionButtons.showPlay = true;
     if (this.numberCycle == 4) {
       this.typeCycle = 'long';
+      this.numberCycle++;
+    } else if (this.numberCycle == 5) {
+      this.typeCycle = 'focus';
       this.numberCycle = 1;
     } else {
       if (this.typeCycle == 'short') {
@@ -45,7 +56,33 @@ export class AppComponent {
       }
       this.typeCycle = this.typeCycle == 'focus' ? 'short' : 'focus';
     }
-    this.resetPomodoro();
+    this.resetPomodoro(false);
+  }
+
+  playAudio() {
+    this.audioPlaying = true;
+    this.audio = new Audio('/assets/alarm.mp3');
+    this.audio.play();
+    this.audio.addEventListener('ended', () => {
+      if (this.audioPlaying) {
+        this.audio.play();
+      }
+    });
+  }
+
+  stopAudio() {
+    this.audioPlaying = false;
+    if (this.audio) {
+      // this.audio.pause();
+    }
+  }
+
+  get textCycle() {
+    switch(this.typeCycle) {
+      case 'focus': return 'Work Hard!';
+      case 'long': return 'Time to relax...';
+      case 'short': return 'Take a break!';
+    }
   }
 
   getTimeConfigByType(type: 'focus' | 'long' | 'short') {

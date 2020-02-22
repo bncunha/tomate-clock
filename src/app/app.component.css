@@ -12,3 +12,14 @@ app-cycle-counter {
 app-action-buttons {
     margin-top: 3em;
 }
+
+footer {
+    text-align: center;
+    font-size: 0.9em;
+    color: #ffafaf;
+    font-weight: 400;
+}
+
+footer a {
+    color: #ffafaf;
+}
