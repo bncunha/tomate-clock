@@ -1,4 +1,0 @@
-<ng-container *ngFor="let c of cyclesArray; let i = index">
-  <div class="dot" [ngClass]="{'dot--active': cycle == i+1, 'dot--pass': i+1 < cycle}"></div>
-</ng-container>
-<span class="cycle--text" tabindex="0"> {{ text }} </span>
