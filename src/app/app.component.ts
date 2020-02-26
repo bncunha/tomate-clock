@@ -34,11 +34,11 @@ export class AppComponent {
     this.timer.pause();
   }
 
-  resetPomodoro(stopAudio = true) {
+  resetPomodoro(stopAudio = true, typeCycle?) {
     if (stopAudio) {
       this.stopAudio();
     }
-    this.timer.reset(this.getTimeConfigByType(this.typeCycle));
+    this.timer.reset(this.getTimeConfigByType(typeCycle ? typeCycle : this.typeCycle));
   }
 
   nextCycle() {
@@ -73,15 +73,15 @@ export class AppComponent {
   stopAudio() {
     this.audioPlaying = false;
     if (this.audio) {
-      // this.audio.pause();
+      this.audio.pause();
     }
   }
 
   get textCycle() {
     switch(this.typeCycle) {
-      case 'focus': return 'Work Hard!';
-      case 'long': return 'Time to relax...';
-      case 'short': return 'Take a break!';
+      case 'focus': return 'Fique focado!';
+      case 'short': return 'Hora de relaxar...';
+      case 'long': return 'Você trabalhou bastante. Tire um descanso maior!';
     }
   }
 

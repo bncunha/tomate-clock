@@ -53,6 +53,7 @@ export class ActionButtonsComponent implements OnInit {
   @Output() redo = new EventEmitter();
 
   @Input() showPlay = true;
+  @Input() showPause = false;
   constructor() { }
 
   ngOnInit() {
@@ -65,6 +66,7 @@ export class ActionButtonsComponent implements OnInit {
   
   play() {
     this.showPlay = false;
+    this.showPause = true;
     this.start.emit();
   }
   

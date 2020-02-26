@@ -2,11 +2,17 @@
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    padding: 2em 0em;
+    padding: 2em 0em 0em 0em;;
+    width: 100%;
+}
+
+.content {
+    display: flex;
+    flex-wrap: wrap;
 }
 
 app-cycle-counter {
-    margin-top: 4em;
+    margin-top: 1em;
 }
 
 app-action-buttons {

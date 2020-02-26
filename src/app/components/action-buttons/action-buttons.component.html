@@ -1,3 +1,3 @@
-<button (click)="pause()" class="action" [@pauseMove] *ngIf="!showPlay"> <i class="fas fa-pause"></i> </button>
+<button (click)="pause()" class="action" [@pauseMove] *ngIf="showPause"> <i class="fas fa-pause"></i> </button>
 <button (click)="play()" class="action" [@playMove] *ngIf="showPlay"> <i class="fas fa-play"></i> </button>
 <button (click)="reset()" class="action" [@resetMove] *ngIf="!showPlay"> <i class="fas fa-redo-alt"></i> </button>

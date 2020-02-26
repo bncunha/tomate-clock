@@ -1,0 +1,31 @@
+input {
+    display: none;
+}
+
+.content {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.check-button {
+    text-align: center;
+    padding: 1em 2em;
+    color: #fff;
+    border-radius: 10px;
+    background-color: #942f2f;
+    margin: 0px 1em;
+    flex: 1 auto;
+    margin-bottom: 0.5em;
+    transition: all 0.2s;
+}
+
+input:not(:checked) + .check-button:hover {
+    transform: translate(-1px, -1px);
+    background: #a23b3b;
+}
+
+input:checked + label.check-button {
+    background-color: #fff;
+    color: #a23b3b;
+    opacity: 1;
+}

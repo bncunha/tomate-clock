@@ -1,10 +1,16 @@
-<div class="wrapper">
-    <app-timer (finish)="nextCycle()"></app-timer>
-    <app-cycle-counter [cycle]="numberCycle" [text]="textCycle"></app-cycle-counter>
-    <app-action-buttons 
-    (start)="startPomodoro()"
-    (stop)="pausePomodoro()"
-    (redo)="resetPomodoro()"> </app-action-buttons>
+<div class="content">
+    <div class="wrapper">
+        <app-filtros-timer [filtro]="typeCycle" (filtroChange)="resetPomodoro(false, $event)"></app-filtros-timer>
+    </div>
+    <div class="wrapper">
+        <app-timer (finish)="nextCycle()"></app-timer>
+        <app-cycle-counter [cycle]="numberCycle" [text]="textCycle"></app-cycle-counter>
+        <app-action-buttons
+        [showPause]="audioPlaying"
+        (start)="startPomodoro()"
+        (stop)="pausePomodoro()"
+        (redo)="resetPomodoro()"> </app-action-buttons>
+    </div>
 </div>
 
 <footer>
