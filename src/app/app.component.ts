@@ -61,7 +61,7 @@ export class AppComponent {
 
   playAudio() {
     this.audioPlaying = true;
-    this.audio = new Audio('/assets/alarm.mp3');
+    this.audio = new Audio('assets/alarm.mp3');
     this.audio.play();
     this.audio.addEventListener('ended', () => {
       if (this.audioPlaying) {
