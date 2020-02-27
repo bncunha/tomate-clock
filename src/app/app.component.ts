@@ -12,12 +12,12 @@ export class AppComponent {
   @ViewChild(ActionButtonsComponent) actionButtons: ActionButtonsComponent;
   title = 'tomate-clock';
 
-  // focusTime = 1500;
-  // shorBreak = 300;
-  // longBreak = 900;
-  focusTime = 4;
-  shorBreak = 2;
-  longBreak = 3;
+  focusTime = 1500;
+  shorBreak = 300;
+  longBreak = 900;
+  // focusTime = 4;
+  // shorBreak = 2;
+  // longBreak = 3;
 
   numberCycle = 1;
   typeCycle: 'focus' | 'long' | 'short' = 'focus';
